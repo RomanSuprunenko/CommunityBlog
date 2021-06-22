@@ -1,0 +1,168 @@
+<%- include('partials/head.ejs'); %>
+<%- include('partials/header.ejs'); %>
+
+<div class="content">
+<section class="container">
+
+    <h1>Storyboards</h1>
+    <input type="text" id="searchInput" onkeyup="search()" placeholder="Search for ..">
+
+    <div class="grid">
+
+        <table class="rows" id="table">
+            <tr>
+                <th>Storyboard Id</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Created By</th>
+                <th>Username</th>
+                <th>Likes</th>
+                <th>Dislikes</th>
+                <th>Status</th>
+                <th>Approve</th>
+                <th>Disable</th>
+                <th>Delete</th>
+            </tr>
+            <% for (let i=0; i < storyboards.length; i++) { %>
+                <tr class="row">
+                    <td>
+                        <a href="/storyboards/<%= storyboards[i]._id %>" title="View storyboard"><%= storyboards[i]._id %></a>
+                    </td>
+                    <td>
+                        <%= storyboards[i].title %>
+                    </td>
+                    <td>
+                        <%= storyboards[i].description %>
+                    </td>
+                    <td>
+                        <a href="/storyboarders/<%= storyboards[i].createdBy %>"><%= storyboards[i].createdBy %></a>
+                    </td>
+                    <td>
+                        <%= storyboards[i].displayName %>
+                    </td>
+                    <td>
+                        <%= storyboards[i].likes %>
+                    </td>
+                    <td>
+                        <%= storyboards[i].dislikes %>
+                    </td>
+                    <td>
+                        <%= storyboards[i].status %>
+                    </td>
+                    <td><button type='button' class="approveButton"
+                            onclick="changeStoryboardStatus('<%= storyboards[i]._id %>', 'approve')">Approve</button>
+                    </td>
+                    <td><button type='button' class="disableButton"
+                            onclick="changeStoryboardStatus('<%= storyboards[i]._id %>', 'disable')">Disable</button>
+                    </td>
+                    <td><button type='button' class="deleteButton"
+                            onclick="showDeleteModal('<%= storyboards[i]._id %>')">Delete</button>
+                    </td>
+                </tr>
+                <% } %>
+        </table>
+    </div>
+
+    <div class="pagination"> 
+        <div id="prev-page"  style="display: inline-block;" onclick="previousPage('<%= page %>')"> &laquo; </div>
+        <!-- <div><span id="currentPage"></span> </div> -->
+        <div id="next-page"  style="display: inline-block;" onclick="nextPage('<%= page %>')"> &raquo; </div> 
+    </div>
+</section>
+</div>
+
+<div id="delete_modal" class="modal" style="display: none">
+    <span onclick="document.getElementById('delete_modal').style.display='none'" class="close"
+        title="Close Modal">&times;</span>
+    <div class="container">
+        <h2>Delete storyboard</h2>
+        <p>Are you sure you want to delete this storyboard?</p>
+
+        <div class="clearfix">
+            <input type="text" name="storyboardId" id="storyboardId" value="" style="display: none"/>
+            <button type="button" class="cancelbtn" onclick="document.getElementById('delete_modal').style.display='none'">Cancel</button>
+            <button type="button" class="deletebtn"
+                onclick="deleteStoryboard()">Delete</button>
+        </div>
+    </div>
+</div>
+<%- include('partials/footer.ejs'); %>
+
+<script>
+    // this.currentPage = 1;
+    $("#prev-page").val(this.currentPage);
+    function showDeleteModal(id) {
+        document.getElementById('delete_modal').style.display='block';
+        $("#storyboardId").val( id );
+    }
+
+    function changeStoryboardStatus(id, action) {
+
+        $.ajax({
+            url: '/admin/change_status/' + id,
+            type: 'POST',
+            method: 'POST',
+            data: { action },
+            dataType: 'json',
+            success: (data) => {
+                window.location.replace('/admin');
+            }
+        });
+    }
+
+    function deleteStoryboard() {
+        let id = $("#storyboardId").val();
+
+        $.ajax({
+            url: '/storyboards/' + id,
+            type: 'DELETE',
+            method: 'DELETE',
+            dataType: 'json',
+            success: (data) => {
+                window.location.replace('/admin');
+            }
+        });
+    }
+
+    function search() {
+        let input = document.getElementById('searchInput');
+        let filter = input.value.toUpperCase();
+        let table = document.getElementById('table');
+        let tr = table.getElementsByTagName('tr');
+
+        for (let i = 0; i < tr.length; i++) {
+            // search in title and description only
+            let titleTd = tr[i].getElementsByTagName('td')[1];
+            let descriptionTd = tr[i].getElementsByTagName('td')[2];
+
+            if (titleTd || descriptionTd) {
+                let titleValue = titleTd.textContent || titleTd.innerText;
+                let descriptionValue = descriptionTd.textContent || descriptionTd.innerText;
+                if (titleValue.toUpperCase().indexOf(filter) > -1 || descriptionValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = '';
+                } else {
+                    tr[i].style.display = 'none';
+                }
+            }
+        }
+    }
+
+    function nextPage(currentPage) {
+
+        if (!currentPage) currentPage = 1;
+        currentPage++;
+        console.log('currentPage', currentPage);
+
+        window.location.replace('/admin?page=' + currentPage);
+        $("#prev-page").css('pointer-events','auto');
+    }
+
+    function previousPage(currentPage) {
+
+        if (!currentPage) currentPage = 1;
+        currentPage--;
+        console.log('currentPage', currentPage);
+        window.location.replace('/admin?page=' + currentPage);
+        if (currentPage == 1) $("#prev-page").css('pointer-events','none');
+    }
+</script>

@@ -1,0 +1,89 @@
+<header id="main-header" class="top">
+    <div class="container">
+
+
+        <div class="left-box">
+
+            <div style="margin-right: 20px;">
+                <a href="/">
+                    <div style="display: flex; align-items: center;">
+
+                        <div style="margin-right: 10px;">
+                            <svg class="logo" viewBox="0 0 68.625 68.625">
+                                <use xlink:href="/gfx/logo.svg#logo1" />
+                            </svg>
+
+                        </div>
+
+                        <div>
+                            <h3>Storyboarders</h3>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <!-- <div class="logo"><a href="/"><img src="/gfx/logo.png" width="240"></a></div> -->
+
+            <div class="navigation">
+                <a href="/storyboards" title="See new posts">Discover</a>
+                <a href="/competitions" title="See competitions">Competitions</a>
+                <!-- <a href="/jobs" title="Jobs / Gigs / Post">Jobs</a>
+                <a href="/resources" title="Interviews / Educational Posts">Resources</a>
+                <a href="/units" title="Incubator type program">Units</a> -->
+                <a href="/admin" title="Switch to Admin Panel">Admin Panel</a>
+            </div>
+        </div>
+
+        <div class="right-box">
+
+            <% if (user) { %>
+            <a class="button" href="/storyboarders/upload"><span style="font-weight:900;">&plus;</span> Upload</a>
+
+            <div class="dropdown">
+                <% if (user.has_avatar) { %>
+                <a class="nav-link" href="/storyboarders/profile" style="display: block; z-index: -1;">
+                    <div class="image-container"
+                        style="border-radius: 6px; background-image: url('https://assets.storyboarders.com/user/<%= user.user_id  %>/profile_128.jpg'); width: 40px; height: 40px;">
+                    </div>
+                </a>
+                <% } else { %>
+                <a class="nav-link" href="/settings/profile" style="display: block; z-index: -1;">
+                    <div class="image-container"
+                        style="border-radius: 6px; background-color: rgba(1,1,1,.3); width: 40px; height: 40px;"></div>
+                </a>
+                <% } %>
+                <div class="dropdown-content">
+
+                    <a class="nav-link" href="/settings/profile">Profile</a>
+                    <div class="dropdown-content__arrow"></div>
+
+                    <a class="nav-link" href="/profile/storyboards">My Storyboards</a>
+                    <!-- <a class="nav-link" href="/settings">Settings</a> -->
+                    <!-- <a class="nav-link" href="/help">Help</a> -->
+                    <hr>
+                    <a class="nav-link" href="/auth/logout">Log Out</a>
+                </div>
+            </div>
+
+
+            <% } else { %>
+
+            <a class="nav-link" href="/auth/login">Login</a>
+            <a class="nav-link" href="/auth/signup">Sign up</a>
+            <!-- <a class="button small pink" href="/storyboarders/signup">Upload</a> -->
+
+            <% } %>
+
+
+        </div>
+    </div>
+    <div class="top-stories">
+
+    </div>
+</header>
+
+<!-- <% if (user) { %> -->
+<!-- <% if (!user.email_confirmed) { %> -->
+<!-- <div class="email_confirmation">Please check your email and confirm your email address. <a href="/resend_confirmation">Re-send email.</a></div> -->
+
+<!-- <% } %> -->
+<!-- <% } %> -->

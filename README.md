@@ -1,2 +1,1 @@
-# CommunityBlog
-Community blog
+# community

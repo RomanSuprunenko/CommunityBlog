@@ -1,0 +1,23 @@
+<%- include('partials/head.ejs'); %>
+<%- include('partials/header.ejs'); %>
+
+<div class="content">
+  <section class="container">
+
+    <h1>Explore these storyboards!</h1>
+
+    <div class="grid">
+
+    <ul class="items">
+      <% for (let i=0; i < storyboards.length; i++) { %>
+        <li class="item">
+          <%- include('partials/storyboard-thumbnail', { storyboard: storyboards[i] }) %>
+        </li>
+      <% } %>
+    </ul>
+  </div>
+  </section>
+</div>
+
+
+<%- include('partials/footer.ejs'); %>

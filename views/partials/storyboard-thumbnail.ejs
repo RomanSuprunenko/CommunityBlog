@@ -1,0 +1,51 @@
+<%
+  const msToTime = s => {
+    if (!s) s = 0
+    s = Math.max(0, s)
+    const addZ = n => (n < 10 ? '0' : '') + n
+
+    s = Math.round(s / 1000)
+
+    var secs = s % 60
+    s = (s - secs) / 60
+    var mins = s % 60
+    var hrs = (s - mins) / 60
+    if (hrs) {
+      return hrs + ':' + addZ(mins) + ':' + addZ(secs)
+    } else {
+      return mins + ':' + addZ(secs)
+    }
+  }
+-%>
+
+<div class="card" data-id="<%= storyboard._id %>" data-num-boards="<%= storyboard.boards %>">
+  <a href="/storyboards/<%= storyboard._id %>">
+    <div class="card-thumbnail">
+      <div class="card-thumbnail__before" style="padding-top: 56.25%"></div>
+      <div class="card-thumbnail__img">
+        <div class="image-container" style="width: 100%;background-image: url('/Example.jpg');"> <!-- https://assets.storyboarders.com/<%= storyboard._id %>/thumbnail.jpg-->
+          <div style="padding-top: 56.25%;">
+          </div>
+        </div>
+      </div>
+      <div class="card-thumbnail__shader">
+        <div style="padding-top: 56.25%;">
+        </div>
+      </div>   
+    </div>
+    <div class="card_footer">
+      <div class="card_footer_left">
+        <div class="inline">
+          <div class="image-container" style="margin-right: 10px; border-radius: 3px; background-image: url('https://assets.storyboarders.com/user/<%= storyboard.userId  %>/profile_128.jpg'); width: 20px; height: 20px;"></div>
+        </div>
+        <div class="card_footer_title"><%= storyboard.title %></div>
+      </div>
+
+      <div class="card_footer_right">
+        <%= storyboard.boards %> boards // <%= msToTime(storyboard.duration) %>
+      </div>
+
+
+    </div>
+  </a>
+</div>

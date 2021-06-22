@@ -1,0 +1,22 @@
+<%- include('partials/head.ejs'); %>
+<%- include('partials/header.ejs'); %>
+
+<div class="content">
+  <section class="container narrow">
+
+    <h1>Welcome to your profile!</h1>
+
+    <p><strong>user_id</strong>: <%= user._id %></p>
+    <!-- <p><strong>password</strong>: <%= user.password %></p> -->
+    <p><strong>username</strong>: <%= user.username %></p>
+    <p><strong>display_name</strong>: <%= user.displayName %></p>
+    <!-- <p><strong>tagline</strong>: <%= user.tagline %></p> -->
+    <p><strong>email</strong>: <%= user.email %></p>
+    <p><strong>about</strong>: <%= user.about %></p>
+    <p><strong>create_time</strong>: <%= user.createdAt %></p>
+    <p><strong>login_time</strong>: <%= user.login_time %></p>
+
+  </section>
+</div>
+
+<%- include('partials/footer.ejs'); %>

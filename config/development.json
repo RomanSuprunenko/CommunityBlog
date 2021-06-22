@@ -1,0 +1,31 @@
+{
+    "server": {
+        "port": 3333,
+        "host": "http://localhost:3333",
+        "baseUrl": "http://localhost:3333"
+    },
+    "db": {
+        "mongodb": {
+            "uri": "mongodb://localhost/community-api"
+        }
+    },
+    "aws": {
+        "accessKeyId": "",
+        "secretAccessKey": "+Kf",
+        "imageBucket": ""
+    },
+    "jwt": {
+        "secret": "",
+        "refreshSecret": "",
+        "tokenLife": 7200,
+        "refreshTokenLife": 86400
+    },
+    "mail": {
+        "user": "",
+        "key": "",
+        "host": "smtp.gmail.com",
+        "domain": ".com",
+        "from": "S",
+        "adminEmail": ""
+    }
+}

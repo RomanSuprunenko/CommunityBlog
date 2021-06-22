@@ -1,0 +1,47 @@
+<%- include('../partials/head.ejs'); %>
+<%- include('../partials/header.ejs'); %>
+
+<div class="content">
+    <section class="container">
+
+        <h1>Settings</h1>
+
+        <div style="display: flex;">
+            <div style="min-width: 300px;">
+                <ul>
+                    <li><a href="/settings/profile/">Profile</a></li>
+                    <li><a href="/settings/images/">Profile Images</a></li>
+                    <li><a href="/settings/email/">Email</a></li>
+                    <li><a href="/settings/password/">Password</a></li>
+                </ul>
+            </div>
+
+            <div style="width: 100%;">
+                <h2>Change your account's email address</h2>
+                <p>Your email address is not public.</p>
+                <form action="/settings/profile" method="post">
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" class="form-control" name="email" value="<%= user.email %>">
+                    </div>
+                    <!-- <div class="form-group">
+        <label>Password</label>
+        <input type="text" class="form-control" name="password">
+      </div> -->
+
+                    <button type="submit">Save</button>
+                </form>
+
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+</div>
+
+<%- include('../partials/footer.ejs'); %>

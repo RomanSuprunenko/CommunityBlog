@@ -1,0 +1,76 @@
+<%- include('../partials/head.ejs'); %>
+<%- include('../partials/header.ejs'); %>
+
+<div class="content">
+  <section class="container">
+
+    <h1>Settings</h1>
+
+    <div style="display: flex;">
+      <div style="min-width: 300px;">
+        <ul>
+          <li><a href="/settings/profile/">Profile</a></li>
+          <li><a href="/settings/images/">Profile Images</a></li>
+          <li><a href="/settings/email/">Email</a></li>
+          <li><a href="/settings/password/">Password</a></li>
+        </ul>
+      </div>
+
+      <div style="width: 100%;">
+      
+      <form action="/settings/profile" method="post">
+
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" value="<%= user.username %>" required>
+      </div>
+      <div class="form-group">
+        <label for="displayName">Display name</label>
+        <input type="text" id="displayName" name="displayName" value="<%= user.displayName %>" required>
+      </div>
+      <!-- <div class="form-group">
+        <label for="tagline">Tagline</label>
+        <input type="text" id="tagline" name="tagline" value="<%= user.tagline %>">
+      </div> -->
+      <div class="form-group">
+        <label for="about">About</label>
+        <textarea id="about" name="about" maxlength="256" rows="3" ><%= user.about %></textarea>
+      </div>
+      <div class="form-group">
+        <label for="location">Location</label>
+        <input type="text" id="location" name="location" value="<%= user.location %>">
+      </div>
+      <hr>
+      <h2>Links</h2>
+      <div class="form-group">
+        <label for="website">Website</label>
+        <input type="text" id="website" name="website" value="<%= user.website %>">
+      </div>
+      <!-- <div class="form-group">
+        <label for="twitter">Twitter</label>
+        <input type="text" id="twitter" name="twitter" value="<%= user.twitter %>">
+      </div> -->
+      <!-- <div class="form-group">
+        <label for="facebook">Facebook</label>
+        <input type="text" id="facebook" name="facebook" value="<%= user.facebook %>">
+      </div>
+      <div class="form-group">
+        <label for="linkedin">Linkedin</label>
+        <input type="text" id="linkedin" name="linkedin" value="<%= user.linkedin %>">
+      </div> -->
+
+        <button type="submit">Save</button>
+        </form>
+
+
+
+      </div>
+
+
+    </div>
+
+
+  </section>
+</div>
+
+<%- include('../partials/footer.ejs'); %>

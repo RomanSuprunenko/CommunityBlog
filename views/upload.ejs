@@ -1,0 +1,55 @@
+<%- include('partials/head.ejs'); %>
+<%- include('partials/header.ejs'); %>
+
+<div class="content">
+  <section class="container narrow">
+
+  <h1><span class="fa fa-sign-in"></span>Upload Storyboard!</h1>
+  <!-- show any messages that come back with authentication -->
+  <% if (message) { %>
+    <div class="alert alert-danger"><%= message %></div>
+  <% } %>
+
+  <!-- LOGIN FORM -->
+  <form action="/storyboarders/upload" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+      <label>Title</label>
+      <input type="text" class="form-control" name="title" value="This is my Storyboard!">
+    </div>
+
+    <div class="form-group">
+      <label>Description</label>
+      <input type="text" class="form-control" name="description" value="This is a description">
+    </div>
+
+    <div class="form-group">
+      <label>Duration</label>
+      <input type="text" class="form-control" name="duration" value="5000">
+    </div>
+
+    <div class="form-group">
+      <label>Boards</label>
+      <input type="text" class="form-control" name="boards" value="20">
+    </div>
+
+    <div class="form-group">
+      <label>Width</label>
+      <input type="text" class="form-control" name="width" value="1200">
+    </div>
+
+    <div class="form-group">
+      <label>Height</label>
+      <input type="text" class="form-control" name="height" value="900">
+    </div>
+
+    <div class="form-group">
+      <label>File</label>
+      <input type="file" class="form-control" name="zip">
+    </div>
+
+    <button type="submit" class="btn btn-warning btn-lg">Upload</button>
+  </form>
+  </section>
+</div>
+
+<%- include('partials/footer.ejs'); %>

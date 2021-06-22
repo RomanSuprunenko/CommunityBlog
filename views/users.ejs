@@ -1,0 +1,15 @@
+<%- include('partials/head.ejs'); %>
+<%- include('partials/header.ejs'); %>
+
+<div class="content">
+  <section class="container narrow">
+
+<% for(var i=0; i<users.length; i++) {%>
+
+  <%= users[i].user_id %>
+<% } %>
+
+</div>
+</div>
+
+<%- include('partials/footer.ejs'); %>

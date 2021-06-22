@@ -1,0 +1,180 @@
+<%- include('partials/head.ejs'); %>
+<%- include('partials/header.ejs'); %>
+
+        <!--  [{"storyboard_id":15173465448166676000,"title":"zoinks324123123","user_id":15172699791063160000,"description":null,"featured":null,"claps":null,"comments":null,"create_time":null,"update_time":null,"duration":null,"boards":null,"private":null,"width":null,"height":null}]
+-->
+<div class="content align-top">
+    <div class="container" style="display: flex;">
+        <div class="left" style="flex: 1;">
+            <div class="player-container">
+                <%- include('partials/player.ejs'); %>
+            </div>
+            <div class="content-wrapper">
+
+                <div class="description-container">
+                    <h1>
+                        <%= storyboard.title %>
+                    </h1>
+                    <div><i onclick="like('<%= storyboard._id %>')" class="fa fa-thumbs-up"></i></div>
+                    <div><i onclick="dislike('<%= storyboard._id %>')" class="fa fa-thumbs-down"></i></div>
+                    <a href="/storyboarders/<%= storyboard.createdBy %>" style="display: table-row;">
+                        <div class="image-container"
+                            style="border-radius: 6px; display: table-cell; background-image: url('https://assets.storyboarders.com/user/<%= storyboard._id  %>/profile_128.jpg'); width: 40px; height: 40px;">
+                        </div>
+                        <div style="display: table-cell; padding: 0 0 0 12px;">By <%= storyboard.displayName %>
+                        </div>
+                    </a>
+                    <span>Likes <%= storyboard.likes %></span>
+
+                </div>
+
+                <hr>
+
+                <div class="comments">
+                    <%= comments.length %> Comments
+                        <div class="spacer-20"></div>
+                        <% if (user) { %>
+                            <div class="comment">
+                                <div class="left">
+                                    <a href="/setpixel">
+                                        <div class="image-container"
+                                            style="margin-right: 10px; border-radius: 7px; background-image: url('https://assets.storyboarders.com/user/<%= user._id  %>/profile_128.jpg'); width: 50px; height: 50px;">
+                                        </div>
+                                    </a>
+                                </div>
+                                <form action="/comments" method="post">
+
+                                    <div class="right input">
+                                        <div class="right__arrow"></div>
+                                        <textarea placeholder="Make a constructive comment!"
+                                            name="text"></textarea>
+                                    </div>
+                                    <input name="storyboardId" type="hidden" value="<%= storyboard._id %>">
+                                    <button type="submit" style="display: block;">Comment</button>
+                                </form>
+                            </div>
+
+                            <% } else { %>
+                                <div class="comment">
+                                    <div class="left">
+
+                                    </div>
+                                    <div class="right input">
+                                        <div class="right__arrow"></div>
+                                        <textarea placeholder="Log in to make a comment!"></textarea>
+                                    </div>
+                                </div>
+
+                                <% } %>
+
+                                    <% if (comments.length> 0) { %>
+                                        <% for(var i=0; i<comments.length; i++) {%>
+                                            <div class="comment">
+                                                <div class="left">
+                                                    <a href="/<%= comments[i].displayName %>">
+                                                        <div class="image-container"
+                                                            style="margin-right: 10px; border-radius: 7px; background-image: url('https://assets.storyboarders.com/user/<%= comments[i].user_id %>/profile_128.jpg'); width: 50px; height: 50px;">
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="right">
+                                                    <div class="right__arrow"></div>
+                                                    <div class="comment-details"><a
+                                                            href="/storyboarders/<%= comments[i].createdBy %>">
+                                                            <%= comments[i].displayName %>
+                                                        </a> <span class="time">
+                                                            <%= moment(comments[i].createdAt).fromNow() %>
+                                                        </span></div>
+                                                    <%= comments[i].text %>
+                                                </div>
+                                            </div>
+                            <% } %>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <div class="right" style="width: 25%; padding-left: 30px;">
+            <div style="width: 100%">
+                <div style="display: table-cell">
+                    <%= storyboard.displayName %>'s storyboards
+                </div>
+            </div>
+            <ul class="items">
+                <% for (let i=0; i < userStoryboards.length; i++) { %>
+                    <li class="item">
+                        <%- include('partials/storyboard-thumbnail', { storyboard: userStoryboards[i] }) %>
+                    </li>
+                    <% } %>
+            </ul>
+            <!-- <div>
+<form action="" method="DELETE" onsubmit="return deleteBoard(this)">
+    <button type="submit">Delete</button>
+</form>
+<script>
+    const deleteBoard = form => {
+        let buttonEl = form.querySelector('button')
+
+        if (confirm('Are you sure?')) {
+            buttonEl.disabled = true
+            buttonEl.innerHTML = 'Deleting …'
+
+            fetch(form.action, {
+                method: 'DELETE',
+                credentials: 'same-origin'
+            }).then(result => {
+                if (result.ok) {
+                    // alert('Deleted!')
+
+                    // follow redirect
+                    if (result.redirected) {
+                        window.location = result.url
+                    }
+                } else {
+                    alert('Oops! Could not delete.')
+                    buttonEl.disabled = false
+                    buttonEl.innerHTML = 'Delete'
+                }
+            })
+        }
+        return false
+    }
+</script>
+</div> -->
+        </div>
+
+
+    </div>
+</div>
+
+<script>
+    let player = new StoryboarderPlayer({
+        element: document.querySelector('.player'),
+        scenePath: "https://assets.storyboarders.com/<%= storyboard.storyboard_id %>/main.storyboarder"
+    }).init();
+
+    function like(id) {
+        $.ajax({
+            url: '/storyboards/' + id + '/like/',
+            type: 'POST',
+            method: 'POST',
+            dataType: 'json',
+            success: (res) => {
+                console.log(res);
+            }
+        });
+    }
+
+    function dislike(id) {
+        $.ajax({
+            url: '/storyboards/' + id + '/dislike/',
+            type: 'POST',
+            method: 'POST',
+            dataType: 'json',
+            success: (res) => {
+                console.log(res);
+            }
+        });
+    }
+</script>
+<%- include('partials/footer.ejs'); %>

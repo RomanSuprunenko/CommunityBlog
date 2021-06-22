@@ -1,0 +1,42 @@
+<%- include('partials/head.ejs'); %>
+<%- include('partials/header.ejs'); %>
+
+<div class="content">
+  <section class="container">
+
+    <div class="image-container" style="border-radius: 16px; background-image: url('https://assets.storyboarders.com/user/<%= profileUser._id  %>/profile_512.jpg'); width: 200px; height: 200px;"></div>
+
+    <h1><%= profileUser.displayName %></h1>
+    <!-- <p><%= profileUser.tagline %></p> -->
+    <p><%= profileUser.location %></p>
+    <p><%= profileUser.about %></p>
+    <hr>
+    <% if (profileUser.website) { %>
+    <p><a target="_blank" href="<%= profileUser.website %>"><%= profileUser.website.replace(/(^\w+:|^)\/\//, '') %></a></p>
+    <% } %>
+    <% if (profileUser.twitter) { %>
+    <p><a target="_blank" href="http://twitter.com/<%= profileUser.twitter %>">@<%= profileUser.twitter %></a></p>
+    <% } %>
+    <!-- <% if (profileUser.facebook) { %>
+    <p><a target="_blank" href="http://facebook.com/<%= profilUser.facebook %>">fb: <%= profileUser.facebook %></p>
+    <% } %> -->
+
+
+    <div class="grid">
+
+    <ul class="items">
+      <% for(var i=0; i<storyboards.length; i++) {%>
+        <li class="item">
+          <%- include('partials/storyboard-thumbnail', { storyboard: storyboards[i] }) %>
+        </li>
+      <% } %>
+
+    </ul>
+  </div>
+
+
+
+  </section>
+</div>
+
+<%- include('partials/footer.ejs'); %>

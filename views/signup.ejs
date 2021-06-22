@@ -1,0 +1,38 @@
+<%- include('partials/head.ejs'); %>
+<%- include('partials/header.ejs'); %>
+
+<div class="content">
+    <section class="container narrow">
+
+        <h1>Sign up</h1>
+
+        <!-- show wwvany messages that come back with authentication -->
+        <% if (message.length > 0) { %>
+        <div class="alert alert-danger"><%= message %></div>
+        <% } %>
+
+        <!-- SIGN UP FORM -->
+        <form action="/storyboarders/signup" method="post">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" class="form-control" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control" name="password" required>
+            </div>
+
+            <button type="submit">Signup</button>
+        </form>
+
+        <hr>
+
+        <p class="small-print">Already have an account? <a href="/auth/login">Login</a></p>
+
+    </section>
+
+</div>
+
+
+<%- include('partials/footer.ejs'); %>
