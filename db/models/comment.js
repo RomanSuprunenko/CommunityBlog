@@ -41,12 +41,6 @@ schema.statics = {
     getAll() {
         return this.find().sort({ createdAt: -1 });
     },
-    // edit(id, data) {
-    //     return this.updateOne({ _id: id }, data);
-    // },
-    // delete(id) {
-    //     return this.remove({ _id: id })
-    // },
     like(id, userId) {
         return this.updateOne({ _id: id }, { $inc: { 'likes': 1 }, $push: { 'likedBy': userId }});
     },

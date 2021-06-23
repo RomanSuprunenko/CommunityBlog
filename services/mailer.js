@@ -2,7 +2,6 @@ const nodemailer = require('nodemailer');
 const config = require('config');
 const mailConfig = config.get('mail');;
 const baseUrl = config.get('server.baseUrl');
-// const mailgun = require('mailgun-js')({ apiKey: mailConfig.apiKey, domain: mailConfig.domain });
 const emailContent = require('./email_content');
 
 const transporter = nodemailer.createTransport({

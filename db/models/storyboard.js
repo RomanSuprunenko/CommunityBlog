@@ -6,7 +6,7 @@ const Mailer = require('../../services/mailer');
 const fs = require('fs');
 const nodeZip = require('node-zip');
 
-const PAGE_SIZE = 3; 
+const PAGE_SIZE = 3;
 
 const schema = new mongoose.Schema({
     title: {
@@ -17,10 +17,6 @@ const schema = new mongoose.Schema({
     description: {
         type: String
     },
-    // body: {
-    //     type: String,
-    //     required: true,
-    // },
     imgUrl: {
         type: String
     },
@@ -65,10 +61,10 @@ schema.statics = {
     },
     getAll(page = 1) {
         const skip = (page - 1) * PAGE_SIZE;
-        return this.find({})  
-                    .sort({ createdAt: -1 })
-                    .skip(skip)          
-                    .limit(PAGE_SIZE);
+        return this.find({})
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(PAGE_SIZE);
     },
     like(id, userId) {
         return this.updateOne({ _id: id }, { $inc: { 'likes': 1 }, $push: { 'likedBy': userId } });
@@ -78,12 +74,12 @@ schema.statics = {
     },
     async upload(fields, path, user) {
 
-        // if (!fields.title || !fields.duration || !fields.boards || !fields.width || !fields.height) {
-        //     return "Doesn't have required fields";
-        // }
+        if (!fields.title || !fields.duration || !fields.boards || !fields.width || !fields.height) {
+            return "Doesn't have required fields";
+        }
 
-        // if (!fields.private) { fields.private = null }
-        // if (!fields.description) { fields.description = null }
+        if (!fields.private) { fields.private = null }
+        if (!fields.description) { fields.description = null }
 
         let contents = fs.readFileSync(path);
         let zip = new nodeZip(contents, { base64: false, checkCRC32: true });
@@ -96,24 +92,24 @@ schema.statics = {
         const storyboard = await this.create({ ...data });
         console.log('storyboard', storyboard);
 
-        // if (storyboard) {
-        //     for (var i = 0; i < filenames.length; i++) {
-        //         if (zip.files[filenames[i]].dir == false) {
-        //             if (zip.files[filenames[i]].name.split('/')[zip.files[filenames[i]].name.split('/').length - 1].charAt(0) !== '.') {
-        //                 if (zip.files[filenames[i]].name.indexOf('.storyboarder') > 0) {
-        //                     zip.files[filenames[i]].name = 'main.storyboarder';
-        //                 }
-        //                 console.log(zip.files[filenames[i]].name);
-        //                 let base64data = Buffer.from(zip.files[filenames[i]]['_data']);
+        if (storyboard) {
+            for (var i = 0; i < filenames.length; i++) {
+                if (zip.files[filenames[i]].dir == false) {
+                    if (zip.files[filenames[i]].name.split('/')[zip.files[filenames[i]].name.split('/').length - 1].charAt(0) !== '.') {
+                        if (zip.files[filenames[i]].name.indexOf('.storyboarder') > 0) {
+                            zip.files[filenames[i]].name = 'main.storyboarder';
+                        }
+                        console.log(zip.files[filenames[i]].name);
+                        let base64data = Buffer.from(zip.files[filenames[i]]['_data']);
 
-        //                 const ContentType = zip.files[filenames[i]].name === 'main.storyboarder' ? `application/json` : `image/jpg`;
-        //                 await S3.uploadFile('assets.storyboarders.com', storyboard._id + '/' + zip.files[filenames[i]].name, base64data, ContentType);
-        //             }
-        //         }
-        //     }
-        //     Mailer.newStoryboard(storyboard._id, storyboard.title ,user.email);
+                        const ContentType = zip.files[filenames[i]].name === 'main.storyboarder' ? `application/json` : `image/jpg`;
+                        await S3.uploadFile('assets.storyboarders.com', storyboard._id + '/' + zip.files[filenames[i]].name, base64data, ContentType);
+                    }
+                }
+            }
+            Mailer.newStoryboard(storyboard._id, storyboard.title, user.email);
             return storyboard;
-        // }
+        }
     }
 }
 

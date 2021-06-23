@@ -152,7 +152,6 @@ async function dislikeStoryboard(req, res) {
 module.exports = {
     getStoryboardById,
     getStoryboards,
-    // createStoryboard,
     editStoryboard,
     deleteStoryboard,
     likeStoryboard,

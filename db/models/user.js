@@ -72,12 +72,6 @@ schema.statics = {
     getAll() {
         return this.find({ active: true }, { passwordHash: 0, confirmHash: 0 }).sort({ createdAt: -1 });
     },
-    // edit(id, data) {
-    //     return this.updateOne({ _id: id }, data);
-    // },
-    // delete(id) {
-    //     return this.remove({ _id: id });
-    // },
     async updateProfileImage(path, id) {
         console.log('here');
         const profileImageBuffer = this._resizeImage(path, 512, 512);

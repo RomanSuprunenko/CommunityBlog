@@ -245,7 +245,6 @@ module.exports = {
     getUser,
     getUsers,
     createUser,
-    // editUser,
     deleteUser,
     resetPassword,
     getResetPasswordPage,
